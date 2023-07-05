@@ -1,4 +1,5 @@
 __pycache_/
 venv/
-./.pytest_cache/
-./.idea/
+.pytest_cache/
+.idea/
+Документация Gitea+webhook.md
