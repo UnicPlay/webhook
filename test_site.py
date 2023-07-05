@@ -15,7 +15,7 @@ def message(client):
 
 
 def upload(client):
-    with open("/home/study5/dev/site/Fake site contents/_build/_build.tar", "rb") as file:
+    with open("/home/study5/dev/site/Fake_site_contents/_build/_build.tar", "rb") as file:
         load_resp = client.post("/webhook/download/_build",
                                 headers={"Download": "true"},
                                 files={"file": file})
@@ -133,7 +133,7 @@ def test_open_page_with_error(client):
 
 def test_sending_bad_file(client):
     assert client.post("/webhook/message/bad", headers={"state": "bad tar"}).status_code == status.HTTP_202_ACCEPTED
-    with open("/home/study5/dev/site/Fake site contents/bad.tar", "rb") as file:
+    with open("/home/study5/dev/site/Fake_site_contents/bad.tar", "rb") as file:
         load_resp = client.post("/webhook/download/bad",
                                 headers={"Download": "true"},
                                 files={"file": file})
@@ -156,7 +156,7 @@ def test_empty_post(client):
 def test_wrong_file_format(client):
     assert client.post("/webhook/message/wrong",
                        headers={"state": "wrong format"}).status_code == status.HTTP_202_ACCEPTED
-    with open("/home/study5/dev/site/Fake site contents/wrong.txt", "rb") as file:
+    with open("/home/study5/dev/site/Fake_site_contents/wrong.txt", "rb") as file:
         load_resp = client.post("/webhook/download/wrong",
                                 headers={"Download": "true"},
                                 files={"file": file})
@@ -168,8 +168,8 @@ def test_uploading_multiple_files(client):
     assert client.post("/webhook/message/many",
                        headers={"state": "too many files"}).status_code == status.HTTP_202_ACCEPTED
 
-    with open("/home/study5/dev/site/Fake site contents/bad.tar", "rb") as file1,\
-         open("/home/study5/dev/site/Fake site contents/wrong.txt", "rb") as file2:
+    with open("/home/study5/dev/site/Fake_site_contents/bad.tar", "rb") as file1,\
+         open("/home/study5/dev/site/Fake_site_contents/wrong.txt", "rb") as file2:
         load_resp = client.post(
             "/webhook/multiple_files",
             files={
@@ -184,7 +184,7 @@ def test_connection_error(client):
     assert client.post("/webhook/message/big",
                        headers={"state": "connection issue"}).status_code == status.HTTP_202_ACCEPTED
     response = client.post("/webhook/download/big",
-                files={"big.tar": "/home/study5/dev/site/Fake site contents/big.tar"},
+                files={"big.tar": "/home/study5/dev/site/Fake_site_contents/big.tar"},
                 timeout=0.1)
     assert os.path.exists(webhook.HOME_PATH.joinpath("error._build"))
     assert response.status_code == status.HTTP_418_IM_A_TEAPOT
