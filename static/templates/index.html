@@ -14,13 +14,8 @@
 </head>
 <body>
 <div style="text-align:center">
-<button type="button" class="btn" onclick="location.href='http://0.0.0.0:8000/apps/service.index.html'">apps</button>
-'
-<button type="button" class="btn" onclick="location.href='http://0.0.0.0:8000/linux/service.index.html'">linux</button>
-'
-<button type="button" class="btn" onclick="location.href='http://0.0.0.0:8000/master/service.index.html'">master</button>
-'
-<button type="button" class="btn" onclick="location.href='http://0.0.0.0:8000/dev/service.index.html'">dev</button>
-'
+{% for number in numbers %}
+    <button type="button" class="btn" onclick="location.href='http://0.0.0.0:8000/{{ number }}/service.index.html'">{{ number }}</button>
+{% endfor %}
 </div></body>
 </html>
