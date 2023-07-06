@@ -14,8 +14,8 @@
 </head>
 <body>
 <div style="text-align:center">
-{% for number in numbers %}
-    <button type="button" class="btn" onclick="location.href='http://0.0.0.0:8000/{{ number }}/service.index.html'">{{ number }}</button>
+{% for name in names %}
+    <button type="button" class="btn" onclick="location.href='http://0.0.0.0:8000/{{ name }}/service.index.html'">{{ name }}</button>
 {% endfor %}
 </div></body>
 </html>
