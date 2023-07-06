@@ -200,6 +200,10 @@ async def get(branch: str, p: str, request: Request):
 
 @app.get("/")
 def read_root(request: Request):
+    """
+    Ручка FastAPI
+    Генерирует индексную страницу в зависимости от наполнения папки "загрузок" (~/dev/load)
+    """
     names = []
     for entry in os.listdir(HOME_PATH):
         entry_path = os.path.join(HOME_PATH, entry)
