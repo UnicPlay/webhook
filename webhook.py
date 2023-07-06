@@ -11,7 +11,7 @@ import os
 from tarfile import TarFile
 import uvicorn
 import threading
-
+import jinja2
 from pydantic import BaseSettings
 
 
@@ -195,12 +195,20 @@ async def get(branch: str, p: str, request: Request):
                                               {"request": request,
                                                "error_name": f"Ошибка - {str(type(e).__name__)}",
                                                "error_context": '\n'.join(map(str, e.args))},
-                                              status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                                              status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)       
 
 
 @app.get("/")
-def read_root():
-    return FileResponse("static/templates/index.html", status_code=status.HTTP_200_OK, media_type='text/html')
+def read_root(request: Request):
+    names = []
+    for entry in os.listdir(HOME_PATH):
+        entry_path = os.path.join(HOME_PATH, entry)
+        if os.path.isdir(entry_path):
+            names.append(entry)
+        elif entry.startswith("load.") or entry.startswith("error."):
+            _, _, suffix = entry.partition(".")
+            names.append(suffix)
+    return TEMPLATES.TemplateResponse("index.html", {"request": request, "names": names}, status_code=status.HTTP_200_OK)
 
 
 if __name__ == "__main__":
