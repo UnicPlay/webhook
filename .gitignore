@@ -2,8 +2,6 @@ __pycache__/
 venv/
 .pytest_cache/
 .idea/
-Документация Gitea+webhook.md
-Инструкция.md
 gitea
 actor/.runner
 Fake_site_contents
