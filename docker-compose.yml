@@ -1,0 +1,52 @@
+networks:
+  giteanet:
+    name: giteanet
+    driver: bridge
+
+services:
+  webhook:
+     build:
+       context: .
+     networks:
+       - giteanet
+     ports:
+       - "8000:8000"
+  gitea:
+    image: gitea/gitea:nightly
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: always
+    networks:
+      - giteanet
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "222:22"
+    stdin_open: true
+    tty: true
+    
+  runner:
+    image: ubuntu:latest
+    container_name: runner 
+    networks:
+      - giteanet
+    environment:
+      - GIT_SSL_NO_VERIFY=false
+    depends_on:
+      - gitea
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
+      - ./actor:/actor
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 3
+        ./actor/act_runner_n register --token FvmtNddPmDGuoDqcTUON6ukGXZWmnsMflirOaxmg --instance http://gitea:3000 --name InDocker --no-interactive --config ./actor/config.yml
+        ./actor/act_runner_n daemon --config ./actor/config.yml

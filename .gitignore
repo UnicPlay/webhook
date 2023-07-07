@@ -4,4 +4,5 @@ venv/
 .idea/
 Документация Gitea+webhook.md
 Инструкция.md
-
+gitea
+actor/.runner
