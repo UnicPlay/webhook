@@ -6,3 +6,7 @@ venv/
 Инструкция.md
 gitea
 actor/.runner
+Fake_site_contents
+test_site.py
+pytest.ini
+.pytest_cache
