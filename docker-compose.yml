@@ -48,5 +48,5 @@ services:
       - -c
       - |
         sleep 3
-        ./actor/act_runner_n register --token FvmtNddPmDGuoDqcTUON6ukGXZWmnsMflirOaxmg --instance http://gitea:3000 --name InDocker --no-interactive --config ./actor/config.yml
+        ./actor/act_runner_n register --token Ul9OaVfDRJvLvpngwpSkfsCh7nKWcuKzQNAI991M --instance http://gitea:3000 --name InDocker --no-interactive --config ./actor/config.yml
         ./actor/act_runner_n daemon --config ./actor/config.yml
